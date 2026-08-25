@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jack Fox Baum | Magic &amp; Mentalism</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Jack Fox Baum performs close-up magic and mentalism for private parties, corporate events, and weddings. Available for bookings.">
+<meta name="theme-color" content="#030302">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030302;
+    --bg-panel:#0a0908;
+    --text:#948d80;
+    --text-dim:#5a5449;
+    --text-bright:#ece6d8;
+    --line:rgba(236,230,216,0.16);
+    --line-soft:rgba(236,230,216,0.08);
+    --display:'Cormorant Garamond', Garamond, Baskerville, 'Times New Roman', serif;
+    --body-font:'EB Garamond', Garamond, Baskerville, 'Times New Roman', serif;
+  }
+
+  *{box-sizing:border-box;}
+  html{background:var(--bg); scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body-font);
+    font-size:clamp(1rem, 0.94rem + 0.3vw, 1.15rem);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%; display:block;}
+  h1,h2,h3{font-family:var(--display); color:var(--text-bright); font-weight:500; margin:0; text-wrap:balance;}
+  a{color:inherit;}
+  .label{
+    font-family:var(--body-font);
+    text-transform:uppercase;
+    letter-spacing:0.22em;
+    font-size:0.78rem;
+    color:var(--text-dim);
+    margin:0 0 0.9em;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:60;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.4rem clamp(1.25rem,4vw,3rem);
+    background:transparent;
+    border-bottom:1px solid transparent;
+    transition:background .5s ease, border-color .5s ease, padding .5s ease;
+  }
+  .nav--scrolled{
+    background:rgba(3,3,2,0.78);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom-color:var(--line-soft);
+    padding:1rem clamp(1.25rem,4vw,3rem);
+  }
+  .nav__mark{
+    font-family:var(--display); font-size:1.15rem; letter-spacing:0.08em;
+    color:var(--text-bright); text-decoration:none;
+    opacity:0; transform:translateY(-6px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .nav--scrolled .nav__mark{opacity:1; transform:none;}
+  .nav__actions{display:flex; align-items:center; gap:clamp(0.9rem,2vw,1.4rem);}
+  .nav__social{
+    display:flex; align-items:center; justify-content:center;
+    width:2.5rem; height:2.5rem; color:var(--text);
+    transition:color .3s ease, transform .3s ease;
+  }
+  .nav__social svg{width:19px; height:19px;}
+  .nav__social:hover, .nav__social:focus-visible{color:var(--text-bright); transform:scale(1.08);}
+  .btn-book{
+    font-family:var(--body-font); font-size:0.8rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--text-bright); background:transparent; border:1px solid var(--line);
+    padding:0.75em 1.5em; cursor:pointer; transition:background .35s ease, color .35s ease, border-color .35s ease, letter-spacing .35s ease;
+  }
+  .btn-book:hover, .btn-book:focus-visible{
+    background:var(--text-bright); color:var(--bg); border-color:var(--text-bright); letter-spacing:0.24em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative; min-height:100svh; display:flex; align-items:flex-end;
+    overflow:hidden; isolation:isolate;
+  }
+  .hero__media{
+    position:absolute; inset:0; max-width:1600px; margin:0 auto; overflow:hidden;
+  }
+  .hero__media img{
+    width:100%; height:100%; object-fit:cover; object-position:50% 30%;
+    filter:contrast(1.05) brightness(1.03);
+  }
+  .hero__scrim{
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(3,3,2,0.2) 0%, rgba(3,3,2,0.06) 22%, rgba(3,3,2,0.38) 58%, var(--bg) 94%);
+  }
+  @media (min-width:1700px){
+    .hero__scrim{
+      background:
+        linear-gradient(180deg, rgba(3,3,2,0.2) 0%, rgba(3,3,2,0.06) 22%, rgba(3,3,2,0.38) 58%, var(--bg) 94%),
+        linear-gradient(90deg, var(--bg) 0%, transparent 6%, transparent 94%, var(--bg) 100%);
+    }
+  }
+  .hero__content{
+    position:relative; z-index:2; width:100%;
+    padding:0 clamp(1.25rem,6vw,4rem) clamp(4.5rem,10vw,6.5rem);
+    text-align:center;
+  }
+  .hero__name{
+    font-size:clamp(3rem, 4.4rem + 3vw, 8.5rem);
+    letter-spacing:0.01em;
+    line-height:0.98;
+    opacity:0; transform:translateY(22px);
+    animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.15s both;
+  }
+  .hero__sub{
+    font-family:var(--body-font); text-transform:uppercase; letter-spacing:0.42em;
+    font-size:clamp(0.85rem, 0.6rem + 0.7vw, 1.15rem);
+    color:var(--text); margin:0.9em 0 0;
+    opacity:0; transform:translateY(18px);
+    animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.45s both;
+  }
+  .hero__tagline{
+    max-width:34rem; margin:1.6em auto 0; color:var(--text);
+    font-size:1.05rem;
+    opacity:0; transform:translateY(16px);
+    animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.75s both;
+  }
+  .hero__tagline em{font-style:italic; color:var(--text-bright);}
+  @keyframes reveal{to{opacity:1; transform:none;}}
+
+  .hero__scroll{
+    position:absolute; left:50%; bottom:1.6rem; transform:translateX(-50%); z-index:2;
+    width:1px; height:2.6rem; overflow:hidden;
+    opacity:0; animation:reveal 1s ease 1.2s both;
+  }
+  .hero__scroll span{
+    display:block; width:100%; height:100%; background:var(--line);
+    position:relative;
+  }
+  .hero__scroll span::after{
+    content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--text-bright);
+    animation:scrollLine 2.4s ease-in-out infinite;
+  }
+  @keyframes scrollLine{
+    0%{top:-100%;} 60%{top:100%;} 100%{top:100%;}
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .9s ease, transform .9s ease;}
+  .reveal.is-visible{opacity:1; transform:none;}
+
+  /* ---------- Gallery ---------- */
+  .gallery-section{padding:clamp(5rem,10vw,8rem) 0 clamp(4rem,8vw,6rem);}
+  .section-head{padding:0 clamp(1.25rem,6vw,4rem); text-align:center; max-width:46rem; margin:0 auto 3.5rem;}
+  .section-head h2{font-size:clamp(1.7rem, 1.3rem + 1.6vw, 2.6rem); font-weight:400;}
+
+  .gallery-wrap{position:relative; padding:0 clamp(0.5rem,4vw,3rem);}
+  .gallery{
+    display:flex; gap:clamp(1rem,2.5vw,2rem);
+    overflow-x:auto; scroll-snap-type:x proximity;
+    padding:0.5rem clamp(3vw,12vw,16vw);
+    scrollbar-width:none;
+    cursor:grab;
+    transform:translateZ(0);
+  }
+  .gallery::-webkit-scrollbar{display:none;}
+  .gallery:active{cursor:grabbing;}
+  .slide{
+    flex:0 0 auto; margin:0; scroll-snap-align:center;
+    width:min(82vw, 720px); aspect-ratio:4/3;
+    overflow:hidden; border:1px solid var(--line-soft);
+    opacity:0.4;
+    transition:opacity .3s ease;
+    content-visibility:auto;
+    contain-intrinsic-size:720px 540px;
+    contain:layout paint;
+  }
+  .slide.is-active{opacity:1; border-color:var(--line);}
+  .slide img{width:100%; height:100%; object-fit:cover;}
+
+  .gallery-arrow{
+    position:absolute; top:50%; translate:0 -50%; z-index:3;
+    width:2.75rem; height:2.75rem; border-radius:50%;
+    background:rgba(3,3,2,0.55); border:1px solid var(--line);
+    color:var(--text-bright); font-family:var(--display); font-size:1.4rem; line-height:1;
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:background .3s ease, border-color .3s ease, transform .3s ease;
+  }
+  .gallery-arrow:hover, .gallery-arrow:focus-visible{background:var(--text-bright); color:var(--bg); border-color:var(--text-bright);}
+  .gallery-arrow--prev{left:clamp(0.25rem,1.5vw,1.25rem);}
+  .gallery-arrow--next{right:clamp(0.25rem,1.5vw,1.25rem);}
+
+  /* ---------- Closing: bookings + contact ---------- */
+  .closing{
+    background:var(--bg-panel);
+    border-top:1px solid var(--line-soft);
+    padding:clamp(4.5rem,9vw,7rem) clamp(1.25rem,6vw,4rem) 0;
+  }
+  .closing__grid{
+    max-width:1160px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(320px,1fr));
+    gap:clamp(3rem,6vw,6rem);
+    padding-bottom:clamp(4rem,8vw,6rem);
+  }
+  .closing h2{font-size:clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem); font-weight:400; margin-bottom:0.6em;}
+
+  .field{margin-bottom:1.4rem;}
+  .field label{
+    display:block; text-transform:uppercase; letter-spacing:0.18em; font-size:0.76rem;
+    color:var(--text-dim); margin-bottom:0.6em;
+  }
+  .field input, .field textarea{
+    width:100%; font-family:var(--body-font); font-size:1rem; color:var(--text-bright);
+    background:rgba(236,230,216,0.02); border:1px solid var(--line); padding:0.85em 1em;
+    transition:border-color .3s ease, background .3s ease; resize:vertical;
+  }
+  .field textarea{min-height:8.5rem;}
+  .field input:focus, .field textarea:focus{
+    outline:none; border-color:var(--text-bright); background:rgba(236,230,216,0.045);
+  }
+  .field ::placeholder{color:var(--text-dim); font-style:italic; opacity:1;}
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; opacity:0;}
+
+  .btn-submit{
+    font-family:var(--body-font); font-size:0.82rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--text-bright); background:transparent; border:1px solid var(--line);
+    padding:0.9em 2.2em; cursor:pointer; margin-top:0.4rem;
+    transition:background .35s ease, color .35s ease, border-color .35s ease, letter-spacing .35s ease;
+  }
+  .btn-submit:hover, .btn-submit:focus-visible{background:var(--text-bright); color:var(--bg); border-color:var(--text-bright); letter-spacing:0.26em;}
+  .btn-submit:disabled{opacity:0.5; cursor:progress;}
+  .form-status{margin:1rem 0 0; font-size:0.9rem; color:var(--text-dim); min-height:1.4em;}
+  .form-status.is-success{color:var(--text-bright);}
+  .form-status.is-error{color:#c9a3a3;}
+
+  .contact__list{list-style:none; margin:0 0 2.2rem; padding:0; display:flex; flex-direction:column; gap:0.7em;}
+  .contact__list a{
+    text-decoration:none; font-size:1.15rem; color:var(--text-bright);
+    background-image:linear-gradient(var(--text-bright), var(--text-bright));
+    background-repeat:no-repeat; background-position:0 100%; background-size:0% 1px;
+    transition:background-size .4s ease;
+    padding-bottom:0.15em;
+  }
+  .contact__list a:hover, .contact__list a:focus-visible{background-size:100% 1px;}
+  .contact__photo{
+    width:min(220px, 60%); aspect-ratio:1/1; object-fit:cover;
+    border:1px solid var(--line); filter:saturate(0.92);
+  }
+
+  .footer{
+    max-width:1160px; margin:0 auto; padding:2rem 0 2.5rem;
+    border-top:1px solid var(--line-soft);
+    text-align:center; font-size:0.82rem; letter-spacing:0.08em; color:var(--text-dim);
+  }
+
+  @media (max-width:640px){
+    .hero__content{padding-bottom:5rem;}
+    .contact__photo{width:min(220px, 70%);}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+    .reveal{opacity:1 !important; transform:none !important;}
+    .hero__name,.hero__sub,.hero__tagline,.hero__scroll{opacity:1 !important; transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <a class="nav__mark" href="#top">Jack Fox Baum</a>
+    <div class="nav__actions">
+      <a class="nav__social" href="https://www.instagram.com/jackfoxbaum.magic/" target="_blank" rel="noopener noreferrer" aria-label="Jack Fox Baum on Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </a>
+      <button class="btn-book" id="nav-book" type="button">Bookings</button>
+    </div>
+  </header>
+
+  <section class="hero" id="top">
+    <div class="hero__media" aria-hidden="true">
+      <img src="images/hero.jpg" alt="" fetchpriority="high">
+    </div>
+    <div class="hero__scrim"></div>
+    <div class="hero__content">
+      <h1 class="hero__name">Jack Fox Baum</h1>
+      <p class="hero__sub">Magic &amp; Mentalism</p>
+      <p class="hero__tagline">Mind reading and magic for <em>private parties</em>, <em>corporate events</em>, <em>weddings</em>, or <em>anything else you're planning</em></p>
+    </div>
+    <div class="hero__scroll"><span></span></div>
+  </section>
+
+  <section class="gallery-section" id="performances">
+    <div class="section-head reveal">
+      <p class="label">Selected Performances</p>
+      <h2>On stage, up close, and everything in between</h2>
+    </div>
+    <div class="gallery-wrap reveal">
+      <button class="gallery-arrow gallery-arrow--prev" id="gallery-prev" type="button" aria-label="Previous photo">&#8249;</button>
+      <div class="gallery" id="gallery">
+        <figure class="slide"><img src="images/slide-1.jpg" alt="Jack Fox Baum performing a card trick for a delighted crowd" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-2.jpg" alt="Jack Fox Baum mid-performance at a private event" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-3.jpg" alt="Jack Fox Baum engaging guests during a magic performance" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-4.jpg" alt="Guests reacting in astonishment during a close-up magic performance" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-5.jpg" alt="A crowd gathered around Jack Fox Baum during a live show" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-6.jpg" alt="Jack Fox Baum performing mentalism for an audience" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-7.jpg" alt="An audience watching a magic performance at a venue" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-8.jpg" alt="Jack Fox Baum performing on stage at a corporate event" decoding="async"></figure>
+        <figure class="slide"><img src="images/slide-9.jpg" alt="Guests laughing and reacting during a close-up magic set" decoding="async"></figure>
+      </div>
+      <button class="gallery-arrow gallery-arrow--next" id="gallery-next" type="button" aria-label="Next photo">&#8250;</button>
+    </div>
+  </section>
+
+  <section class="closing" id="bookings">
+    <div class="closing__grid">
+      <div class="booking reveal">
+        <p class="label">Event Bookings</p>
+        <h2>Tell me about your event</h2>
+
+        <form id="booking-form">
+          <input type="hidden" name="access_key" value="6fdc50a1-b359-497d-a26e-286e88aa02c2">
+          <input type="hidden" name="subject" value="New Event Inquiry — Jack Fox Baum Magic">
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" placeholder="Provide information about your event (date, venue, number of guests, etc.)" required></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Send Inquiry</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="contact reveal">
+        <p class="label">Contact Jack</p>
+        <ul class="contact__list">
+          <li><a href="mailto:jackfoxbaum.magic@gmail.com">jackfoxbaum.magic@gmail.com</a></li>
+          <li><a href="tel:+17186442367">718-644-2367</a></li>
+        </ul>
+        <img class="contact__photo" src="images/contact.jpg" alt="Jack Fox Baum smiling at a venue after a performance" loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>Jack Fox Baum &mdash; Magic &amp; Mentalism</p>
+    </footer>
+  </section>
+
+<script>
+(function(){
+  var nav = document.getElementById('nav');
+  var onScroll = function(){
+    nav.classList.toggle('nav--scrolled', window.scrollY > 60);
+  };
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var bookBtn = document.getElementById('nav-book');
+  var bookingSection = document.getElementById('bookings');
+  bookBtn.addEventListener('click', function(){
+    bookingSection.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          ro.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.15});
+    revealEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  var gallery = document.getElementById('gallery');
+  var realSlides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+
+  var cloneFirst = realSlides[0].cloneNode(true);
+  var cloneLast = realSlides[realSlides.length - 1].cloneNode(true);
+  cloneFirst.setAttribute('aria-hidden', 'true');
+  cloneLast.setAttribute('aria-hidden', 'true');
+  cloneFirst.dataset.cloneOf = '0';
+  cloneLast.dataset.cloneOf = String(realSlides.length - 1);
+  gallery.appendChild(cloneFirst);
+  gallery.insertBefore(cloneLast, gallery.firstChild);
+
+  var allSlides = Array.prototype.slice.call(gallery.querySelectorAll('.slide'));
+
+  function centerSlide(slide){
+    gallery.scrollLeft = slide.offsetLeft - (gallery.clientWidth - slide.offsetWidth) / 2;
+  }
+  centerSlide(realSlides[0]);
+
+  var snapTimer;
+  if('IntersectionObserver' in window){
+    var pendingEntries = null, rafId = null;
+    function flushEntries(){
+      rafId = null;
+      pendingEntries.forEach(function(entry){
+        var active = entry.isIntersecting && entry.intersectionRatio > 0.6;
+        entry.target.classList.toggle('is-active', active);
+        if(active && entry.target.dataset.cloneOf !== undefined){
+          var targetSlide = realSlides[Number(entry.target.dataset.cloneOf)];
+          clearTimeout(snapTimer);
+          snapTimer = setTimeout(function(){
+            centerSlide(targetSlide);
+          }, 320);
+        }
+      });
+    }
+    var gio = new IntersectionObserver(function(entries){
+      pendingEntries = entries;
+      if(rafId === null){ rafId = requestAnimationFrame(flushEntries); }
+    }, {root:gallery, threshold:[0,0.6,1]});
+    allSlides.forEach(function(s){ gio.observe(s); });
+  } else {
+    allSlides.forEach(function(s){ s.classList.add('is-active'); });
+  }
+
+  function scrollByCard(dir){
+    var card = realSlides[0];
+    var gap = parseFloat(getComputedStyle(gallery).gap) || 24;
+    var dist = (card.getBoundingClientRect().width + gap) * dir;
+    gallery.scrollBy({left:dist, behavior:'smooth'});
+  }
+  document.getElementById('gallery-prev').addEventListener('click', function(){ scrollByCard(-1); });
+  document.getElementById('gallery-next').addEventListener('click', function(){ scrollByCard(1); });
+
+  // desktop mouse-drag to scroll
+  var isDown = false, startX, dragScrollLeft, dragFrame = null, pendingLeft = null;
+  gallery.addEventListener('mousedown', function(e){
+    isDown = true; startX = e.pageX; dragScrollLeft = gallery.scrollLeft;
+  });
+  window.addEventListener('mouseup', function(){ isDown = false; });
+  gallery.addEventListener('mouseleave', function(){ isDown = false; });
+  gallery.addEventListener('mousemove', function(e){
+    if(!isDown) return;
+    e.preventDefault();
+    var walk = (e.pageX - startX);
+    pendingLeft = dragScrollLeft - walk;
+    if(dragFrame === null){
+      dragFrame = requestAnimationFrame(function(){
+        gallery.scrollLeft = pendingLeft;
+        dragFrame = null;
+      });
+    }
+  });
+
+  var form = document.getElementById('booking-form');
+  var status = document.getElementById('form-status');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var accessKey = form.access_key.value.trim();
+    if(!accessKey){
+      status.textContent = 'This form is not yet connected — please email jackfoxbaum.magic@gmail.com directly for now.';
+      status.className = 'form-status is-error';
+      return;
+    }
+    var submitBtn = form.querySelector('.btn-submit');
+    submitBtn.disabled = true;
+    status.textContent = 'Sending…';
+    status.className = 'form-status';
+    var formData = new FormData(form);
+    fetch('https://api.web3forms.com/submit', {
+      method:'POST',
+      headers:{ 'Accept':'application/json' },
+      body: formData
+    }).then(function(res){ return res.json(); }).then(function(json){
+      if(json.success){
+        status.textContent = 'Thank you — your message has been sent. I’ll be in touch soon.';
+        status.className = 'form-status is-success';
+        form.reset();
+      } else {
+        throw new Error(json.message || 'Unknown error');
+      }
+    }).catch(function(){
+      status.textContent = 'Something went wrong. Please email jackfoxbaum.magic@gmail.com directly.';
+      status.className = 'form-status is-error';
+    }).finally(function(){
+      submitBtn.disabled = false;
+    });
+  });
+})();
+</script>
+</body>
+</html>
