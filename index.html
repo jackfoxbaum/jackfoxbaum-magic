@@ -119,29 +119,34 @@
     letter-spacing:0.01em;
     line-height:0.98;
     opacity:0; transform:translateY(22px);
-    animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.15s both;
   }
   .hero__sub{
     font-family:var(--body-font); text-transform:uppercase; letter-spacing:0.42em;
     font-size:clamp(0.85rem, 0.6rem + 0.7vw, 1.15rem);
     color:var(--text); margin:0.9em 0 0;
     opacity:0; transform:translateY(18px);
-    animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.45s both;
   }
   .hero__tagline{
     max-width:34rem; margin:1.6em auto 0; color:var(--text);
     font-size:1.05rem;
     opacity:0; transform:translateY(16px);
-    animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.75s both;
   }
   .hero__tagline em{font-style:italic; color:var(--text-bright);}
   @keyframes reveal{to{opacity:1; transform:none;}}
 
+  /* Hero entrance animations are gated on .fonts-loaded (added by JS once
+     the custom fonts have finished loading, or after a timeout) so the
+     reveal never starts in a fallback font and then swaps mid-animation. */
+  .fonts-loaded .hero__name{animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.15s both;}
+  .fonts-loaded .hero__sub{animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.45s both;}
+  .fonts-loaded .hero__tagline{animation:reveal 1.3s cubic-bezier(.2,.7,.2,1) 0.75s both;}
+
   .hero__scroll{
     position:absolute; left:50%; bottom:1.6rem; transform:translateX(-50%); z-index:2;
     width:1px; height:2.6rem; overflow:hidden;
-    opacity:0; animation:reveal 1s ease 1.2s both;
+    opacity:0;
   }
+  .fonts-loaded .hero__scroll{animation:reveal 1s ease 1.2s both;}
   .hero__scroll span{
     display:block; width:100%; height:100%; background:var(--line);
     position:relative;
@@ -371,6 +376,17 @@
 
 <script>
 (function(){
+  var markFontsLoaded = function(){
+    document.documentElement.classList.add('fonts-loaded');
+  };
+  if(document.fonts && document.fonts.ready){
+    var fontsSettled = false;
+    document.fonts.ready.then(function(){ fontsSettled = true; markFontsLoaded(); }).catch(markFontsLoaded);
+    setTimeout(function(){ if(!fontsSettled) markFontsLoaded(); }, 1500);
+  } else {
+    markFontsLoaded();
+  }
+
   var nav = document.getElementById('nav');
   var onScroll = function(){
     nav.classList.toggle('nav--scrolled', window.scrollY > 60);
